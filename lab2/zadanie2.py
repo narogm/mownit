@@ -1,4 +1,6 @@
 import numpy as np
+import time
+import scipy.linalg
 
 
 def lu(A):
@@ -30,15 +32,31 @@ def extract_L_and_U(A):
     return L, U
 
 
-# A = np.array([[5.0, 3.0, 2.0], [1.0, 2.0, 0.0], [3.0, 0.0, 4.0]])
-# lu(A)
+def get_times(sizes):
+    for i in sizes:
+        print("size: ", i)
+        A = np.random.rand(i, i)
+        start = time.time()
+        LU = lu(A)
+        duration = time.time() - start
+        print("time for my algorithm: ", duration)
+        start = time.time()
+        P, L, U = scipy.linalg.lu(A)
+        duration = time.time() - start
+        print("time for library algorithm: ", duration, "\n---------------\n")
+
+
+# get_times([10, 50, 200, 500])
+
 A = np.random.rand(5, 5)
 print(A)
 LU = lu(A)
+print()
+print(LU)
 L, U = extract_L_and_U(A)
-# print(L)
-# print()
-# print(U)
-# print()
+print()
+print(L)
+print()
+print(U)
+print()
 print(L@U)
-
